@@ -14,6 +14,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:onestep_imagepicker/widget/asset_picker.dart';
 import 'package:onestep_imagepicker/widget/asset_picker_viewer.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +25,6 @@ import '../constants/extensions.dart';
 import '../delegates/asset_picker_text_delegate.dart';
 import '../internal/singleton.dart';
 import '../provider/asset_picker_provider.dart';
-import '../widget/asset_picker.dart';
 import '../widget/asset_picker_app_bar.dart';
 import '../widget/builder/asset_entity_grid_item_builder.dart';
 import '../widget/builder/value_listenable_builder_2.dart';
@@ -126,7 +126,8 @@ abstract class AssetPickerBuilderDelegate<Asset, Path> {
   final bool? shouldRevertGrid;
 
   /// [ThemeData] for the picker.
-  ThemeData get theme => pickerTheme ?? AssetPicker.themeData(themeColor);
+  ThemeData get theme =>
+      pickerTheme ?? OnestepImagePicker.themeData(themeColor);
 
   /// Return a system ui overlay style according to
   /// the brightness of the theme data.
@@ -188,7 +189,7 @@ abstract class AssetPickerBuilderDelegate<Asset, Path> {
 
   /// Keep a `initState` method to sync with [State].
   @mustCallSuper
-  void initState(AssetPickerState<Asset, Path> state) {}
+  void initState(OnestepImagePickerState<Asset, Path> state) {}
 
   /// Keep a `dispose` method to sync with [State].
   @mustCallSuper

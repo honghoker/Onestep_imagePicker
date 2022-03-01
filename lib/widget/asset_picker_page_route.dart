@@ -4,14 +4,14 @@
 ///
 import 'package:flutter/material.dart';
 
-/// Build [AssetPickerPageRoute] with the given generic type.
-typedef AssetPickerPageRouteBuilder<T> = AssetPickerPageRoute<T> Function(
+/// Build [ImagePickerPageRoute] with the given generic type.
+typedef AssetPickerPageRouteBuilder<T> = ImagePickerPageRoute<T> Function(
   Widget picker,
 );
 
 /// Built a slide page transition for the picker.
-class AssetPickerPageRoute<T> extends PageRoute<T> {
-  AssetPickerPageRoute({
+class ImagePickerPageRoute<T> extends PageRoute<T> {
+  ImagePickerPageRoute({
     required this.builder,
     this.transitionCurve = Curves.easeIn,
     this.transitionDuration = const Duration(milliseconds: 250),

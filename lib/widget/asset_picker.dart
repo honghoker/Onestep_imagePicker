@@ -10,8 +10,8 @@ import '../../internal/methods.dart';
 import '../../internal/singleton.dart';
 import '../../provider/asset_picker_provider.dart';
 
-class AssetPicker<Asset, Path> extends StatefulWidget {
-  const AssetPicker({Key? key, required this.builder}) : super(key: key);
+class OnestepImagePicker<Asset, Path> extends StatefulWidget {
+  const OnestepImagePicker({Key? key, required this.builder}) : super(key: key);
 
   final AssetPickerBuilderDelegate<Asset, Path> builder;
 
@@ -41,7 +41,7 @@ class AssetPicker<Asset, Path> extends StatefulWidget {
       sortPathDelegate: pickerConfig.sortPathDelegate,
       filterOptions: pickerConfig.filterOptions,
     );
-    final Widget picker = AssetPicker<AssetEntity, AssetPathEntity>(
+    final Widget picker = OnestepImagePicker<AssetEntity, AssetPathEntity>(
       key: Singleton.pickerKey,
       builder: DefaultAssetPickerBuilderDelegate(
         provider: provider,
@@ -67,7 +67,7 @@ class AssetPicker<Asset, Path> extends StatefulWidget {
       rootNavigator: useRootNavigator,
     ).push<List<AssetEntity>>(
       pageRouteBuilder?.call(picker) ??
-          AssetPickerPageRoute<List<AssetEntity>>(builder: (_) => picker),
+          ImagePickerPageRoute<List<AssetEntity>>(builder: (_) => picker),
     );
     return result;
   }
@@ -81,7 +81,7 @@ class AssetPicker<Asset, Path> extends StatefulWidget {
   }) async {
     await permissionCheck();
 
-    final Widget picker = AssetPicker<Asset, Path>(
+    final Widget picker = OnestepImagePicker<Asset, Path>(
       key: Singleton.pickerKey,
       builder: delegate,
     );
@@ -90,7 +90,7 @@ class AssetPicker<Asset, Path> extends StatefulWidget {
       rootNavigator: useRootNavigator,
     ).push<List<Asset>>(
       pageRouteBuilder?.call(picker) ??
-          AssetPickerPageRoute<List<Asset>>(builder: (_) => picker),
+          ImagePickerPageRoute<List<Asset>>(builder: (_) => picker),
     );
     return result;
   }
@@ -212,17 +212,18 @@ class AssetPicker<Asset, Path> extends StatefulWidget {
   }
 
   @override
-  AssetPickerState<Asset, Path> createState() =>
-      AssetPickerState<Asset, Path>();
+  OnestepImagePickerState<Asset, Path> createState() =>
+      OnestepImagePickerState<Asset, Path>();
 }
 
-class AssetPickerState<Asset, Path> extends State<AssetPicker<Asset, Path>>
+class OnestepImagePickerState<Asset, Path>
+    extends State<OnestepImagePicker<Asset, Path>>
     with TickerProviderStateMixin, WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance!.addObserver(this);
-    AssetPicker.registerObserve(_onLimitedAssetsUpdated);
+    OnestepImagePicker.registerObserve(_onLimitedAssetsUpdated);
     widget.builder.initState(this);
   }
 
@@ -239,7 +240,7 @@ class AssetPickerState<Asset, Path> extends State<AssetPicker<Asset, Path>>
   @override
   void dispose() {
     WidgetsBinding.instance!.removeObserver(this);
-    AssetPicker.unregisterObserve(_onLimitedAssetsUpdated);
+    OnestepImagePicker.unregisterObserve(_onLimitedAssetsUpdated);
     widget.builder.dispose();
     super.dispose();
   }

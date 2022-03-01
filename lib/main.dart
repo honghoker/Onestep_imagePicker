@@ -9,7 +9,7 @@ void main() {
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent),
   );
-  AssetPicker.registerObserve();
+  OnestepImagePicker.registerObserve();
 }
 
 class MyApp extends StatelessWidget {

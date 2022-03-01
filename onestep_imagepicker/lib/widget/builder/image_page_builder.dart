@@ -118,7 +118,7 @@ class _ImagePageBuilderState extends State<ImagePageBuilder> {
           _initializeLivePhoto();
         }
         _isLocallyAvailable = true;
-        // TODO(Alex): Wait until `extended_image` support synchronized zooming.
+
         return GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: widget.delegate.switchDisplayingDetail,

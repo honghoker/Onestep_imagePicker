@@ -774,21 +774,25 @@ class DefaultAssetPickerBuilderDelegate
   ) async {
     final DefaultAssetPickerProvider provider =
         context.read<DefaultAssetPickerProvider>();
-    bool selectedAllAndNotSelected() =>
-        !provider.selectedAssets.contains(asset) &&
-        provider.selectedMaximumAssets;
-    bool selectedPhotosAndIsVideo() =>
-        isWeChatMoment &&
-        asset.type == AssetType.video &&
-        provider.selectedAssets.isNotEmpty;
+
+    // bool selectedAllAndNotSelected() =>
+    //     !provider.selectedAssets.contains(asset) &&
+    //     provider.selectedMaximumAssets;
+    // bool selectedPhotosAndIsVideo() =>
+    //     isWeChatMoment &&
+    //     asset.type == AssetType.video &&
+    //     provider.selectedAssets.isNotEmpty;
+
     // When we reached the maximum select count and the asset
     // is not selected, do nothing.
     // When the special type is WeChat Moment, pictures and videos cannot
     // be selected at the same time. Video select should be banned if any
     // pictures are selected.
-    if (selectedAllAndNotSelected() || selectedPhotosAndIsVideo()) {
-      return;
-    }
+
+    // if (selectedAllAndNotSelected() || selectedPhotosAndIsVideo()) {
+    //   return;
+    // }
+
     final List<AssetEntity> _current;
     final List<AssetEntity>? _selected;
     final int _index;

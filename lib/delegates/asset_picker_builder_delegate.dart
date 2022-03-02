@@ -1678,7 +1678,7 @@ class DefaultAssetPickerBuilderDelegate
                               : p.name,
                       style: const TextStyle(
                         fontSize: 17,
-                        fontWeight: FontWeight.normal,
+                        fontWeight: FontWeight.bold,
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,

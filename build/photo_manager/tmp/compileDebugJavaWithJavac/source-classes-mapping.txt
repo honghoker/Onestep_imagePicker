@@ -1,0 +1,2 @@
+com/fluttercandies/photo_manager/BuildConfig.java
+ com.fluttercandies.photo_manager.BuildConfig

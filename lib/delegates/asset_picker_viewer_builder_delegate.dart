@@ -756,51 +756,10 @@ class DefaultAssetPickerViewerBuilderDelegate
             'Viewer provider must not be null'
             'when the special type is not WeChat moment.',
           );
-          return MaterialButton(
-            minWidth: () {
-              if (isWeChatMoment && hasVideo) {
-                return 48.0;
-              }
-              return provider!.isSelectedNotEmpty ? 48.0 : 20.0;
-            }(),
-            height: 32.0,
-            padding: const EdgeInsets.symmetric(horizontal: 12.0),
-            color: themeData.colorScheme.secondary,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(3.0),
-            ),
-            child: ScaleText(
-              () {
-                if (isWeChatMoment && hasVideo) {
-                  return textDelegate.confirm;
-                }
-                if (provider!.isSelectedNotEmpty) {
-                  return '${textDelegate.confirm}'
-                      ' (${provider.currentlySelectedAssets.length}'
-                      '/'
-                      '${selectorProvider!.maxAssets})';
-                }
-                return textDelegate.confirm;
-              }(),
-              style: TextStyle(
-                color: themeData.textTheme.bodyText1?.color,
-                fontSize: 17,
-                fontWeight: FontWeight.normal,
-              ),
-              semanticsLabel: () {
-                if (isWeChatMoment && hasVideo) {
-                  return semanticsTextDelegate.confirm;
-                }
-                if (provider!.isSelectedNotEmpty) {
-                  return '${semanticsTextDelegate.confirm}'
-                      ' (${provider.currentlySelectedAssets.length}'
-                      '/'
-                      '${selectorProvider!.maxAssets})';
-                }
-                return semanticsTextDelegate.confirm;
-              }(),
-            ),
-            onPressed: () {
+
+          return GestureDetector(
+            behavior: HitTestBehavior.translucent,
+            onTap: () {
               if (isWeChatMoment && hasVideo) {
                 Navigator.of(context).pop(<AssetEntity>[currentAsset]);
                 return;
@@ -809,13 +768,104 @@ class DefaultAssetPickerViewerBuilderDelegate
                 Navigator.of(context).pop(provider.currentlySelectedAssets);
                 return;
               }
-              selectAsset(currentAsset);
-              Navigator.of(context).pop(
-                selectedAssets ?? <AssetEntity>[currentAsset],
-              );
+              // selectAsset(currentAsset);
+              // Navigator.of(context).pop(
+              //   selectedAssets ?? <AssetEntity>[currentAsset],
+              // );
             },
-            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            child: Container(
+              height: 32.0,
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: RichText(
+                  textAlign: TextAlign.right,
+                  text: TextSpan(
+                    style: const TextStyle(fontSize: 17, height: 1),
+                    children: <TextSpan>[
+                      if (provider!.isSelectedNotEmpty)
+                        TextSpan(
+                          text: '${provider.currentlySelectedAssets.length}',
+                          style: TextStyle(
+                            color: themeData.colorScheme.secondary,
+                            height: 1,
+                          ),
+                        ),
+                      TextSpan(
+                        text: ' ${textDelegate.confirm}',
+                        style: TextStyle(
+                          color: provider.isSelectedNotEmpty
+                              ? themeData.textTheme.bodyText1?.color
+                              : themeData.textTheme.caption?.color,
+                          height: 1,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           );
+
+          // return MaterialButton(
+          //   minWidth: () {
+          //     if (isWeChatMoment && hasVideo) {
+          //       return 48.0;
+          //     }
+          //     return provider!.isSelectedNotEmpty ? 48.0 : 20.0;
+          //   }(),
+          //   height: 32.0,
+          //   padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          //   // color: themeData.colorScheme.secondary,
+          //   // shape: RoundedRectangleBorder(
+          //   //   borderRadius: BorderRadius.circular(3.0),
+          //   // ),
+          //   child: ScaleText(
+          //     () {
+          //       if (isWeChatMoment && hasVideo) {
+          //         return textDelegate.confirm;
+          //       }
+          //       if (provider!.isSelectedNotEmpty) {
+          //         return '${textDelegate.confirm}'
+          //             ' (${provider.currentlySelectedAssets.length}'
+          //             '/'
+          //             '${selectorProvider!.maxAssets})';
+          //       }
+          //       return textDelegate.confirm;
+          //     }(),
+          //     style: TextStyle(
+          //       color: themeData.textTheme.bodyText1?.color,
+          //       fontSize: 17,
+          //       fontWeight: FontWeight.normal,
+          //     ),
+          //     semanticsLabel: () {
+          //       if (isWeChatMoment && hasVideo) {
+          //         return semanticsTextDelegate.confirm;
+          //       }
+          //       if (provider!.isSelectedNotEmpty) {
+          //         return '${semanticsTextDelegate.confirm}'
+          //             ' (${provider.currentlySelectedAssets.length}'
+          //             '/'
+          //             '${selectorProvider!.maxAssets})';
+          //       }
+          //       return semanticsTextDelegate.confirm;
+          //     }(),
+          //   ),
+          //   onPressed: () {
+          //     if (isWeChatMoment && hasVideo) {
+          //       Navigator.of(context).pop(<AssetEntity>[currentAsset]);
+          //       return;
+          //     }
+          //     if (provider!.isSelectedNotEmpty) {
+          //       Navigator.of(context).pop(provider.currentlySelectedAssets);
+          //       return;
+          //     }
+          //     selectAsset(currentAsset);
+          //     Navigator.of(context).pop(
+          //       selectedAssets ?? <AssetEntity>[currentAsset],
+          //     );
+          //   },
+          //   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          // );
         },
       ),
     );

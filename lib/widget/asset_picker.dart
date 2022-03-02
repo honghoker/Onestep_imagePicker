@@ -24,7 +24,6 @@ class OnestepImagePicker<Asset, Path> extends StatefulWidget {
   }
 
   /// Static method to push with the navigator.
-  /// 跳转至选择器的静态方法
   static Future<List<AssetEntity>?> pickAssets(
     BuildContext context, {
     AssetPickerConfig pickerConfig = const AssetPickerConfig(),
@@ -96,7 +95,6 @@ class OnestepImagePicker<Asset, Path> extends StatefulWidget {
   }
 
   /// Register observe callback with assets changes.
-  /// 注册资源（图库）变化的监听回调
   static void registerObserve([ValueChanged<MethodCall>? callback]) {
     if (callback == null) {
       return;
@@ -110,7 +108,6 @@ class OnestepImagePicker<Asset, Path> extends StatefulWidget {
   }
 
   /// Unregister the observation callback with assets changes.
-  /// 取消注册资源（图库）变化的监听回调
   static void unregisterObserve([ValueChanged<MethodCall>? callback]) {
     if (callback == null) {
       return;
@@ -124,7 +121,6 @@ class OnestepImagePicker<Asset, Path> extends StatefulWidget {
   }
 
   /// Build a dark theme according to the theme color.
-  /// 通过主题色构建一个默认的暗黑主题
   static ThemeData themeData(Color? themeColor, {bool light = true}) {
     themeColor ??= defaultThemeColorWeChat;
     if (light) {

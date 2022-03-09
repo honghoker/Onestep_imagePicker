@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:onestep_imagepicker/constants/config.dart';
-import 'package:onestep_imagepicker/constants/enums.dart';
 import 'package:onestep_imagepicker/widget/asset_picker.dart';
 import 'package:photo_manager/photo_manager.dart';
 

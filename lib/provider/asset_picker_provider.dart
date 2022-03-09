@@ -2,6 +2,7 @@
 /// [Author] Alex (https://github.com/Alex525)
 /// [Date] 2020/3/31 15:28
 ///
+import 'dart:io';
 import 'dart:math' as math;
 import 'dart:typed_data';
 
@@ -11,6 +12,8 @@ import 'package:photo_manager/photo_manager.dart';
 import '../constants/constants.dart';
 import '../delegates/sort_path_delegate.dart';
 import '../internal/singleton.dart';
+
+bool get isAppleOS => Platform.isIOS || Platform.isMacOS;
 
 /// [ChangeNotifier] for assets picker.
 ///
@@ -34,7 +37,6 @@ abstract class AssetPickerProvider<Asset, Path> extends ChangeNotifier {
   final int maxAssets;
 
   /// Assets should be loaded per page.
-  ///
   /// Use `null` to display all assets into a single grid.
   final int pageSize;
 
@@ -111,7 +113,6 @@ abstract class AssetPickerProvider<Asset, Path> extends ChangeNotifier {
   }
 
   /// Map for all path entity.
-  ///
   /// Using [Map] in order to save the thumbnail data
   /// for the first asset under the path.
   Map<Path, Uint8List?> get pathsList => _pathsList;
@@ -124,7 +125,6 @@ abstract class AssetPickerProvider<Asset, Path> extends ChangeNotifier {
   }
 
   /// How many path has a valid thumb data.
-  ///
   /// This getter provides a "Should Rebuild" condition judgement to [Selector]
   /// with the path entities widget.
   int get validPathThumbnailsCount =>
@@ -150,7 +150,9 @@ abstract class AssetPickerProvider<Asset, Path> extends ChangeNotifier {
     if (value == _currentAssets) {
       return;
     }
+
     _currentAssets = List<Asset>.from(value);
+
     notifyListeners();
   }
 
@@ -167,7 +169,6 @@ abstract class AssetPickerProvider<Asset, Path> extends ChangeNotifier {
   }
 
   /// Descriptions for selected assets currently.
-  ///
   /// This getter provides a "Should Rebuild" condition judgement to [Selector]
   /// with the preview widget's selective part.
   String get selectedDescriptions => _selectedAssets.fold(
@@ -228,7 +229,6 @@ class DefaultAssetPickerProvider
   final SortPathDelegate<AssetPathEntity>? sortPathDelegate;
 
   /// Filter options for the picker.
-  ///
   /// Will be merged into the base configuration.
   final FilterOptionGroup? filterOptions;
 
@@ -284,7 +284,9 @@ class DefaultAssetPickerProvider
       page: page,
       size: pageSize,
     );
-    _currentAssets = List<AssetEntity>.of(list);
+
+    _currentAssets = List<AssetEntity>.of(isAppleOS ? list.reversed : list);
+
     _hasAssetsToDisplay = currentAssets.isNotEmpty;
     notifyListeners();
   }
@@ -295,7 +297,10 @@ class DefaultAssetPickerProvider
       page: currentAssetsListPage,
       size: pageSize,
     );
-    final List<AssetEntity> assets = List<AssetEntity>.of(list);
+    final List<AssetEntity> assets = isAppleOS
+        ? List<AssetEntity>.of(list.reversed)
+        : List<AssetEntity>.of(list);
+
     if (assets.isNotEmpty && currentAssets.contains(assets[0])) {
       return;
     }
@@ -352,8 +357,18 @@ class DefaultAssetPickerProvider
         return true;
       }(),
     );
-    final AssetEntity asset =
-        (await path.getAssetListRange(start: 0, end: 1)).single;
+    final List<AssetEntity> assets = await path.getAssetListRange(
+      start: 0,
+      end: 1,
+    );
+    if (assets.isEmpty) {
+      return null;
+    }
+    final AssetEntity asset = assets.single;
+    // Obtain the thumbnail only when the asset is image or video.
+    if (asset.type != AssetType.image || asset.type != AssetType.video) {
+      return null;
+    }
     final Uint8List? assetData = await asset.thumbnailDataWithSize(
       pathThumbnailSize,
     );

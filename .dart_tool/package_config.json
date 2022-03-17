@@ -39,7 +39,7 @@
     },
     {
       "name": "extended_image",
-      "rootUri": "file:///Users/hong-eunpyo/development/flutter/.pub-cache/hosted/pub.dartlang.org/extended_image-6.0.1",
+      "rootUri": "file:///Users/hong-eunpyo/development/flutter/.pub-cache/hosted/pub.dartlang.org/extended_image-6.0.2+1",
       "packageUri": "lib/",
       "languageVersion": "2.14"
     },
@@ -177,7 +177,7 @@
     },
     {
       "name": "photo_manager",
-      "rootUri": "file:///Users/hong-eunpyo/development/flutter/.pub-cache/hosted/pub.dartlang.org/photo_manager-2.0.0-dev.12",
+      "rootUri": "file:///Users/hong-eunpyo/development/flutter/.pub-cache/hosted/pub.dartlang.org/photo_manager-2.0.1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -290,7 +290,7 @@
       "languageVersion": "2.16"
     }
   ],
-  "generated": "2022-03-03T14:21:03.248330Z",
+  "generated": "2022-03-17T03:47:11.895154Z",
   "generator": "pub",
   "generatorVersion": "2.16.1"
 }

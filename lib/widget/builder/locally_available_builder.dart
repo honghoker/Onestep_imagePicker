@@ -39,7 +39,7 @@ class _LocallyAvailableBuilderState extends State<LocallyAvailableBuilder> {
   }
 
   Future<void> _checkLocallyAvailable() async {
-    _isLocallyAvailable = await widget.asset.isLocallyAvailable;
+    _isLocallyAvailable = (await widget.asset.isLocallyAvailable) as bool;
     if (!mounted) {
       return;
     }
